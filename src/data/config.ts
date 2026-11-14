@@ -9,7 +9,7 @@ export const CONFIG = {
   PRECO_DE: 97.00,
   CHECKOUT_URL: 'https://pay.cakto.com.br/uma73ob_1324290',      // ex.: https://pay.cakto.com.br/xxxx
   WHATSAPP_SUPORTE: '[PREENCHER_55DDDNUMERO]', // só números, com 55 + DDD (vira link wa.me)
-  EMAIL_SUPORTE: '[PREENCHER_EMAIL]',
+  EMAIL_SUPORTE: 'inteiromulherhv@gmail.com',
   META_PIXEL_ID: '1191826046838369',
 };
 
