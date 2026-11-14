@@ -1,4 +1,5 @@
 import type { MouseEvent, ReactNode } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { buildCheckoutUrl, checkoutConfigurado } from '@/lib/checkout';
 import { trackInitiateCheckout } from '@/lib/track';
 
@@ -38,6 +39,7 @@ export function CheckoutButton({
     <a href={href} id={`cta-${id}`} data-cta={id} className={className} onClick={onClick}>
       {neon && <span className="cta-shine" aria-hidden="true" />}
       <span className="cta-label">{children}</span>
+      <ArrowRight className="cta-arrow h-5 w-5" strokeWidth={2.6} aria-hidden="true" />
     </a>
   );
 }
@@ -60,6 +62,9 @@ export function AnchorButton({
     >
       {variant === 'cta' && <span className="cta-shine" aria-hidden="true" />}
       <span className="cta-label">{children}</span>
+      {variant === 'cta' && (
+        <ArrowRight className="cta-arrow h-5 w-5" strokeWidth={2.6} aria-hidden="true" />
+      )}
     </a>
   );
 }

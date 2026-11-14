@@ -83,14 +83,30 @@
     font-size: 16px;
     letter-spacing: 0.04em;
     line-height: 1.2;
-    box-shadow: 0 10px 30px -10px rgba(142, 44, 72, 0.55);
-    transition: transform 0.15s ease;
+    /* borda 3D (base sólida) + sombra de brilho */
+    box-shadow:
+      0 6px 0 #5c1a30,
+      0 16px 34px -10px rgba(142, 44, 72, 0.6);
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
     -webkit-tap-highlight-color: transparent;
+    /* "respiração": usa a propriedade scale para não brigar com o transform do clique */
+    animation: cta-breathe 2.2s ease-in-out infinite;
+  }
+  .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 0 #5c1a30,
+      0 20px 40px -10px rgba(142, 44, 72, 0.7);
   }
   .btn-cta:active {
-    transform: scale(0.98);
+    transform: translateY(4px);
+    box-shadow:
+      0 2px 0 #5c1a30,
+      0 8px 18px -8px rgba(142, 44, 72, 0.6);
   }
-  /* brilho pulsante: só opacity e transform */
+  /* halo neon pulsando no mesmo ritmo (só opacity e transform) */
   .btn-cta::before {
     content: '';
     position: absolute;
@@ -98,10 +114,10 @@
     z-index: -1;
     border-radius: inherit;
     box-shadow:
-      0 0 18px 2px rgba(194, 87, 122, 0.75),
-      0 0 42px 6px rgba(194, 87, 122, 0.35);
-    opacity: 0.25;
-    animation: cta-pulse 2.8s ease-in-out infinite;
+      0 0 20px 3px rgba(194, 87, 122, 0.8),
+      0 0 48px 8px rgba(194, 87, 122, 0.38);
+    opacity: 0.2;
+    animation: cta-pulse 2.2s ease-in-out infinite;
     pointer-events: none;
   }
   /* reflexo de luz atravessando o botão */
@@ -118,15 +134,21 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 45%;
+    width: 40%;
     background: linear-gradient(
       100deg,
       rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.38) 50%,
+      rgba(255, 255, 255, 0.55) 50%,
       rgba(255, 255, 255, 0) 100%
     );
-    transform: translateX(-120%) skewX(-18deg);
-    animation: cta-shine 4s ease-in-out infinite;
+    transform: translateX(-150%) skewX(-20deg);
+    animation: cta-shine 3s ease-in-out infinite;
+  }
+  /* seta que "empurra" para a direita */
+  .btn-cta .cta-arrow {
+    position: relative;
+    flex-shrink: 0;
+    animation: cta-nudge 1.6s ease-in-out infinite;
   }
   .btn-cta > .cta-label {
     position: relative;
@@ -141,24 +163,53 @@
   }
 }
 
+@keyframes cta-breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.035;
+  }
+}
 @keyframes cta-pulse {
   0%,
   100% {
-    opacity: 0.25;
+    opacity: 0.2;
     transform: scale(1);
   }
   50% {
-    opacity: 0.85;
-    transform: scale(1.02);
+    opacity: 0.9;
+    transform: scale(1.04);
   }
 }
 @keyframes cta-shine {
-  0% {
-    transform: translateX(-120%) skewX(-18deg);
+  0%,
+  55% {
+    transform: translateX(-150%) skewX(-20deg);
   }
-  35%,
   100% {
-    transform: translateX(320%) skewX(-18deg);
+    transform: translateX(330%) skewX(-20deg);
+  }
+}
+@keyframes cta-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------- Selo de garantia girando ---------- */
+.seal-ring {
+  transform-origin: 100px 100px;
+  animation: seal-spin 22s linear infinite;
+}
+@keyframes seal-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -261,8 +312,11 @@
     animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
   }
+  .btn-cta,
   .btn-cta::before,
   .btn-cta .cta-shine::after,
+  .btn-cta .cta-arrow,
+  .seal-ring,
   .swipe-hint,
   .hint-arrow {
     animation: none !important;

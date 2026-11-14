@@ -1,6 +1,5 @@
 import { ShieldCheck, Smartphone } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { BONUS, CONFIG, GARANTIA_DIAS, WHATSAPP_LINK } from '@/data/config';
+import { BONUS, CONFIG, GARANTIA_DIAS } from '@/data/config';
 import { Accordion } from './Accordion';
 import { CheckoutButton } from './Buttons';
 import { Reveal } from './motion';
@@ -13,13 +12,16 @@ function SeloGarantia() {
         <path id="selo-circulo" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" />
       </defs>
       <circle cx="100" cy="100" r="96" fill="#C9A46A" />
-      <circle cx="100" cy="100" r="86" fill="none" stroke="#2A1B33" strokeOpacity=".35" strokeWidth="1.5" strokeDasharray="3 4" />
+      {/* anel externo girando */}
+      <g className="seal-ring">
+        <circle cx="100" cy="100" r="86" fill="none" stroke="#2A1B33" strokeOpacity=".35" strokeWidth="1.5" strokeDasharray="3 4" />
+        <text fontFamily="Inter, sans-serif" fontSize="12.5" fontWeight="700" fill="#2A1B33">
+          <textPath href="#selo-circulo" startOffset="0" textLength="446" lengthAdjust="spacing">
+            GARANTIA INCONDICIONAL · {GARANTIA_DIAS} DIAS · COMPRA SEGURA ·
+          </textPath>
+        </text>
+      </g>
       <circle cx="100" cy="100" r="58" fill="#2A1B33" />
-      <text fontFamily="Inter, sans-serif" fontSize="12.5" fontWeight="700" fill="#2A1B33">
-        <textPath href="#selo-circulo" startOffset="0" textLength="446" lengthAdjust="spacing">
-          GARANTIA INCONDICIONAL · {GARANTIA_DIAS} DIAS · COMPRA SEGURA ·
-        </textPath>
-      </text>
       <text x="100" y="104" textAnchor="middle" fontFamily="Lora, serif" fontSize="44" fontWeight="700" fill="#C9A46A">
         {GARANTIA_DIAS}
       </text>
@@ -145,26 +147,6 @@ export function Rodape() {
           Este material tem caráter educativo e não substitui acompanhamento psicológico, médico ou
           jurídico. Este produto não garante resultados específicos; os resultados podem variar.
         </p>
-        <p>
-          Se você está em situação de violência, ligue <strong>180</strong> (Central de Atendimento
-          à Mulher) ou <strong>190</strong>. Se estiver pensando em tirar a própria vida, ligue{' '}
-          <strong>188</strong> (CVV), 24h e gratuito.
-        </p>
-        <nav aria-label="Links do rodapé" className="flex flex-wrap justify-center gap-x-4 gap-y-2 pt-2">
-          <Link to="/privacidade" className="underline hover:text-vinho">
-            Política de Privacidade
-          </Link>
-          <Link to="/termos" className="underline hover:text-vinho">
-            Termos de Uso
-          </Link>
-          {WHATSAPP_LINK ? (
-            <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="underline hover:text-vinho">
-              Suporte: WhatsApp
-            </a>
-          ) : (
-            <span>Suporte: WhatsApp {CONFIG.WHATSAPP_SUPORTE}</span>
-          )}
-        </nav>
       </div>
     </footer>
   );
