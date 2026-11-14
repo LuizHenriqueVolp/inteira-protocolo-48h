@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { BadgeCheck, Heart, Star } from 'lucide-react';
 import { REVISAO } from '@/data/config';
-import { DEPOIMENTOS } from '@/data/depoimentos';
+import { DEPOIMENTOS, type Depoimento } from '@/data/depoimentos';
 import { Img } from './Img';
 import { Reveal, Stagger, StaggerItem } from './motion';
 
@@ -61,47 +62,87 @@ export function Autora() {
 }
 
 /* ---------------- 4.11 Depoimentos (só com 3+ ativos) ---------------- */
+function Relato({ d }: { d: Depoimento }) {
+  const [curtido, setCurtido] = useState(false);
+  return (
+    <article className="grid grid-cols-[42px_minmax(0,1fr)] items-start gap-3.5 rounded-2xl border border-[#eadfe4] bg-white px-4 py-[18px] shadow-soft md:grid-cols-[56px_minmax(0,1fr)] md:gap-5 md:rounded-[20px] md:px-[26px] md:py-6">
+      <span
+        className="grid aspect-square w-[42px] place-items-center rounded-full font-serif text-[18px] font-semibold text-white md:w-14 md:text-[23px]"
+        style={{ background: 'var(--grad-cta)' }}
+        aria-hidden="true"
+      >
+        {d.nome.trim().charAt(0).toUpperCase()}
+      </span>
+      <div>
+        <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <strong className="text-[16px] leading-tight">{d.nome}</strong>
+          {d.cidade && <span className="text-[14px] text-cinza">· {d.cidade}</span>}
+          {d.tag && (
+            <span className="rounded-full bg-nevoa px-2.5 py-0.5 text-[12px] font-semibold text-vinho">
+              {d.tag}
+            </span>
+          )}
+        </div>
+        {!d.ficticio && (
+          <div className="mb-2 flex gap-0.5" role="img" aria-label="5 estrelas">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <Star key={i} className="h-4 w-4 fill-champagne text-champagne" aria-hidden="true" />
+            ))}
+          </div>
+        )}
+        <p className="text-[16px] leading-[1.65] md:text-[17px]">{d.texto}</p>
+        <button
+          type="button"
+          aria-pressed={curtido}
+          aria-label={`Curtir relato de ${d.nome}`}
+          onClick={() => setCurtido((c) => !c)}
+          className={`mt-3 inline-flex items-center gap-1.5 py-1 text-[14px] transition-colors ${
+            curtido ? 'text-rose' : 'text-cinza hover:text-rose'
+          }`}
+        >
+          <Heart
+            className={`h-[18px] w-[18px] transition-transform duration-200 ${curtido ? 'scale-110 fill-rose' : ''}`}
+            aria-hidden="true"
+          />
+          {curtido ? 'Curtido' : 'Curtir'}
+        </button>
+      </div>
+    </article>
+  );
+}
+
 export function Depoimentos() {
   const ativos = DEPOIMENTOS.filter((d) => d.ativo);
   if (ativos.length < 3) return null;
+  const temFicticio = ativos.some((d) => d.ficticio);
 
   return (
     <section aria-labelledby="depo-titulo" className="section bg-nevoa">
-      <div className="container-page">
+      <div className="mx-auto w-full max-w-[1060px] px-5 md:px-8">
         <Reveal className="text-center">
           <h2 id="depo-titulo" className="h2">
-            O que estão dizendo
+            O que estão <em className="text-vinho">dizendo</em>
           </h2>
+          {temFicticio && (
+            <p className="mx-auto mt-3 max-w-[620px] text-[16px] leading-relaxed text-cinza">
+              Exemplos fictícios de sentimentos e dúvidas que podem surgir depois de uma descoberta.
+              Cada história é única.
+            </p>
+          )}
         </Reveal>
-        <Stagger className="mt-10 grid gap-4 md:grid-cols-3">
+        <Stagger className="mt-8 grid gap-[18px] md:mt-9">
           {ativos.map((d) => (
-            <StaggerItem key={d.nome + d.texto.slice(0, 12)} className="card relative p-5">
-              <Heart
-                className="absolute right-4 top-4 h-5 w-5 fill-rose/20 text-rose"
-                aria-hidden="true"
-              />
-              <div className="flex items-center gap-3">
-                <span
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-bold text-white"
-                  style={{ background: 'var(--grad-cta)' }}
-                  aria-hidden="true"
-                >
-                  {d.nome.trim().charAt(0).toUpperCase()}
-                </span>
-                <div>
-                  <p className="text-[15px] font-bold leading-tight">{d.nome}</p>
-                  {d.cidade && <p className="text-[13px] text-cinza">{d.cidade}</p>}
-                </div>
-              </div>
-              <div className="mt-3 flex gap-0.5" aria-label="5 estrelas">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} className="h-4 w-4 fill-champagne text-champagne" aria-hidden="true" />
-                ))}
-              </div>
-              <p className="mt-2 text-[15px] leading-relaxed">{d.texto}</p>
+            <StaggerItem key={d.nome + d.texto.slice(0, 12)}>
+              <Relato d={d} />
             </StaggerItem>
           ))}
         </Stagger>
+        {temFicticio && (
+          <p className="mx-1 mt-5 text-center text-[13px] leading-relaxed text-cinza">
+            <strong>Personagens e relatos fictícios para demonstração.</strong> Não representam
+            clientes nem comentários reais.
+          </p>
+        )}
       </div>
     </section>
   );
