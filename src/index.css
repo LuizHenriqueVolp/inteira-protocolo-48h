@@ -90,6 +90,9 @@
       0 8px 10px -6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-tap-highlight-color: transparent;
+    /* pulso suave da referência (2 s, até 102%). Usa a propriedade "scale" para
+       somar com o zoom do hover, que usa "transform". */
+    animation: pulse-soft 2s ease-in-out infinite;
   }
   .btn-cta:hover {
     transform: scale(1.05);
@@ -108,6 +111,16 @@
   }
 }
 
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.02;
+  }
+}
 
 /* ---------- Selo de garantia girando ---------- */
 .seal-ring {
@@ -219,6 +232,7 @@
     animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
   }
+  .btn-cta,
   .seal-ring,
   .swipe-hint,
   .hint-arrow {
