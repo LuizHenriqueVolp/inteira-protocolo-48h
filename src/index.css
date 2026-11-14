@@ -74,81 +74,26 @@
     @apply inline-flex items-center rounded-full bg-champagne px-3 py-1 text-[12px] font-bold uppercase tracking-[0.08em] text-ameixa;
   }
 
-  /* ---------- CTA principal com efeito neon discreto ---------- */
+  /* ---------- CTA principal (animação igual à de referência) ----------
+     Em repouso: sombra suave. Ao passar o mouse/tocar: cresce para 105% e ganha um halo
+     na cor da marca, com transição de 0,3 s. */
   .btn-cta {
-    @apply relative isolate inline-flex w-full items-center justify-center gap-2 px-6 text-center font-bold uppercase text-white md:w-auto md:min-w-[360px];
+    @apply relative inline-flex w-full items-center justify-center gap-2 px-6 text-center font-bold uppercase text-white md:w-auto md:min-w-[360px];
     min-height: 56px;
     border-radius: 14px;
     background: var(--grad-cta);
     font-size: 16px;
     letter-spacing: 0.04em;
     line-height: 1.2;
-    /* borda 3D (base sólida) + sombra de brilho */
     box-shadow:
-      0 6px 0 #5c1a30,
-      0 16px 34px -10px rgba(142, 44, 72, 0.6);
-    transition:
-      transform 0.15s ease,
-      box-shadow 0.15s ease;
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-tap-highlight-color: transparent;
-    /* "respiração": usa a propriedade scale para não brigar com o transform do clique */
-    animation: cta-breathe 2.2s ease-in-out infinite;
   }
   .btn-cta:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      0 8px 0 #5c1a30,
-      0 20px 40px -10px rgba(142, 44, 72, 0.7);
-  }
-  .btn-cta:active {
-    transform: translateY(4px);
-    box-shadow:
-      0 2px 0 #5c1a30,
-      0 8px 18px -8px rgba(142, 44, 72, 0.6);
-  }
-  /* halo neon pulsando no mesmo ritmo (só opacity e transform) */
-  .btn-cta::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    box-shadow:
-      0 0 20px 3px rgba(194, 87, 122, 0.8),
-      0 0 48px 8px rgba(194, 87, 122, 0.38);
-    opacity: 0.2;
-    animation: cta-pulse 2.2s ease-in-out infinite;
-    pointer-events: none;
-  }
-  /* reflexo de luz atravessando o botão */
-  .btn-cta .cta-shine {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .btn-cta .cta-shine::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 40%;
-    background: linear-gradient(
-      100deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.55) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: translateX(-150%) skewX(-20deg);
-    animation: cta-shine 3s ease-in-out infinite;
-  }
-  /* seta que "empurra" para a direita */
-  .btn-cta .cta-arrow {
-    position: relative;
-    flex-shrink: 0;
-    animation: cta-nudge 1.6s ease-in-out infinite;
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(194, 87, 122, 0.3);
   }
   .btn-cta > .cta-label {
     position: relative;
@@ -163,44 +108,6 @@
   }
 }
 
-@keyframes cta-breathe {
-  0%,
-  100% {
-    scale: 1;
-  }
-  50% {
-    scale: 1.035;
-  }
-}
-@keyframes cta-pulse {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.04);
-  }
-}
-@keyframes cta-shine {
-  0%,
-  55% {
-    transform: translateX(-150%) skewX(-20deg);
-  }
-  100% {
-    transform: translateX(330%) skewX(-20deg);
-  }
-}
-@keyframes cta-nudge {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(4px);
-  }
-}
 
 /* ---------- Selo de garantia girando ---------- */
 .seal-ring {
@@ -312,10 +219,6 @@
     animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
   }
-  .btn-cta,
-  .btn-cta::before,
-  .btn-cta .cta-shine::after,
-  .btn-cta .cta-arrow,
   .seal-ring,
   .swipe-hint,
   .hint-arrow {
