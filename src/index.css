@@ -122,6 +122,11 @@
   }
 }
 
+/* selo do topo pulsando (igual à referência) */
+.pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
 /* ---------- Mockup do hero flutuando (igual à referência: 6 s, sobe 10px) ---------- */
 .animate-float {
   animation: float 6s ease-in-out infinite;
@@ -248,6 +253,7 @@
   }
   .btn-cta,
   .animate-float,
+  .pulse-soft,
   .seal-ring,
   .swipe-hint,
   .hint-arrow {
