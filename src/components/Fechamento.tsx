@@ -7,7 +7,7 @@ import { Reveal } from './motion';
 /* ---------------- 4.14 Garantia ---------------- */
 function SeloGarantia() {
   return (
-    <svg viewBox="0 0 200 200" className="h-36 w-36 md:h-44 md:w-44" role="img" aria-label="Selo de garantia de 7 dias">
+    <svg viewBox="0 0 200 200" className="h-28 w-28 md:h-32 md:w-32" role="img" aria-label="Selo de garantia de 7 dias">
       <defs>
         <path id="selo-circulo" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" />
       </defs>
@@ -35,21 +35,38 @@ function SeloGarantia() {
 export function Garantia() {
   return (
     <section aria-labelledby="garantia-titulo" className="section bg-nevoa">
-      <Reveal className="container-text flex flex-col items-center text-center">
-        <SeloGarantia />
-        <h2 id="garantia-titulo" className="h2 mt-6">
-          Garantia incondicional de {GARANTIA_DIAS} dias
-        </h2>
-        <p className="mt-5 text-cinza">
-          Leia o Protocolo inteiro. Se em até {GARANTIA_DIAS} dias você sentir que ele não é para
-          você, basta pedir o reembolso pela própria plataforma de pagamento ou pelo e-mail{' '}
-          <a className="font-semibold text-vinho underline" href={`mailto:${CONFIG.EMAIL_SUPORTE}`}>
-            {CONFIG.EMAIL_SUPORTE}
-          </a>
-          , e você recebe 100% do seu dinheiro de volta. Sem perguntas e sem constrangimento. O
-          risco é todo nosso.
-        </p>
-      </Reveal>
+      <div className="container-text">
+        <Reveal>
+          <div className="rounded-[24px] bg-white px-5 py-10 text-center shadow-card md:px-12 md:py-14">
+            <div className="flex justify-center">
+              <SeloGarantia />
+            </div>
+            <h2 id="garantia-titulo" className="h2 mt-5">
+              Garantia de <em className="text-vinho">{GARANTIA_DIAS} dias</em>
+            </h2>
+            <p className="mx-auto mt-3 max-w-[520px] text-[17px] leading-relaxed text-cinza md:text-[19px]">
+              Mais um incentivo para você provar que o Protocolo Inteira é para você!
+            </p>
+            <div className="mt-8 rounded-2xl bg-nevoa px-5 py-6 text-left md:px-8">
+              <p className="text-[15px] font-bold uppercase leading-snug tracking-[0.02em] text-ameixa md:text-[16px]">
+                Você tem {GARANTIA_DIAS} dias de garantia incondicional!
+              </p>
+              <p className="mt-3 text-[16px] leading-relaxed text-cinza">
+                Leia o Protocolo inteiro. Se em até {GARANTIA_DIAS} dias você sentir que ele não é
+                para você, basta pedir o reembolso pela própria plataforma de pagamento ou mandar um
+                e-mail para{' '}
+                <a
+                  className="break-all font-bold text-vinho hover:underline"
+                  href={`mailto:${CONFIG.EMAIL_SUPORTE}`}
+                >
+                  {CONFIG.EMAIL_SUPORTE}
+                </a>
+                , e você recebe 100% do seu dinheiro de volta. Sem perguntas e sem constrangimento.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
     </section>
   );
 }
