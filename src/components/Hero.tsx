@@ -80,6 +80,7 @@ export function Hero() {
 
           {/* Mobile: mockup + preço lado a lado para o CTA aparecer sem rolar */}
           <div className="mt-4 grid grid-cols-[42%_1fr] items-center gap-3 md:hidden">
+            <div className="animate-float">
             <Img
               src="/assets/mockup-hero.webp"
               alt="eBook e celular com o Protocolo Inteira"
@@ -88,6 +89,7 @@ export function Hero() {
               priority
               className="h-auto w-full"
             />
+            </div>
             <PriceCard />
           </div>
           <div className="mt-8 hidden max-w-[360px] md:block">
@@ -100,7 +102,7 @@ export function Hero() {
           <TrustRow className="mt-4 md:max-w-[460px]" />
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden animate-float md:block">
           <Img
             src="/assets/mockup-hero.webp"
             alt="eBook e celular com o Protocolo Inteira"
